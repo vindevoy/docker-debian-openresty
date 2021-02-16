@@ -3,8 +3,8 @@
 # Makefile for Docker projects
 #
 # Author: Yves Vindevogel (vindevoy)
-# Version: 1.0.0
-# Date: 2019-10-29
+# Version: 1.1.0
+# Date: 2021-02-29
 #
 ###
 
@@ -23,8 +23,10 @@ IMAGE_REPO=vindevoy
 IMAGE_NAME=debian10-nginx-lua-script
 IMAGE_VERSION=1.0.0
 
+PORT_FORWARDING=-p80:80
 
-######################mv
+
+######################
 # DO NOT TOUCH BELOW #
 ######################
 
@@ -87,7 +89,7 @@ compile:
 
 # run the image using the develop tag (created with compile)
 test: compile
-	docker run -it -p 8080:8080 $(IMAGE_REPO)/$(IMAGE_NAME):dvl
+	docker run -it $(PORT_FORWARDING) $(IMAGE_REPO)/$(IMAGE_NAME):dvl
 
 
 # build builds the docker image based on the optimized build directory and tags the image as latest
@@ -107,7 +109,7 @@ build:
 
 
 run: build
-	docker run -it -p 8080:8080 $(IMAGE_REPO)/$(IMAGE_NAME):rel
+	docker run -it $(PORT_FORWARDING) $(IMAGE_REPO)/$(IMAGE_NAME):rel
 
 
 # create the tags IMAGE_VERSION and latest based on a build
