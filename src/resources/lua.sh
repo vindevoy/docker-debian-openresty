@@ -1,0 +1,1 @@
+echo '<html><body><p>LUA SCRIPT OUTPUT</p></body></html>' > /var/www/lua/output.html
