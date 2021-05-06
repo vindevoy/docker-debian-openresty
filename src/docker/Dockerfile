@@ -7,7 +7,7 @@
 #
 ###
  
-FROM vindevoy/debian10-base:latest
+FROM vindevoy/debian-base:latest
 
 LABEL maintainer="Yves Vindevogel (vindevoy) - yves.vindevogel@asynchrone.com"
 
