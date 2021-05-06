@@ -3,7 +3,7 @@
 #	Yves Vindevogel (vindevoy)
 #	2021-02-16
 #
-#	CentOS 10 based image running NGINX that executes a bash script and returns the output of it on port 3112
+#	Debian based image running NGINX that executes a bash script and returns the output of it on port 80
 #
 ###
  
