@@ -20,7 +20,7 @@ SHELL=/bin/bash
 
 
 IMAGE_REPO=vindevoy
-IMAGE_NAME=centos8-openresty
+IMAGE_NAME=debian-openresty
 IMAGE_VERSION=1.0.0
 
 PORT_FORWARDING=-p80:80
