@@ -2,23 +2,22 @@ FROM vindevoy/debian-base:latest
 
 LABEL maintainer="Yves Vindevogel (vindevoy) - yves.vindevogel@asynchrone.com"
 
-COPY resources/lua.sh /tmp/lua.sh
-COPY resources/lua-server /tmp/lua-server
+COPY resources/openresty.sh /root/openresty.sh
+COPY resources/openresty.conf /root/openresty.conf
+COPY resources/openresty.list /etc/apt/sources.list.d/openresty.list
 
 RUN set -x && \ 
+    apt-get install -y --no-install-recommends wget gnupg ca-certificates && \ 
+    wget -O - https://openresty.org/package/pubkey.gpg | apt-key add - && \ 
     apt-get update -y && \ 
     apt-get upgrade -y && \ 
-    apt-get install nginx libnginx-mod-http-lua --no-install-recommends -y && \ 
-    rm -f /etc/nginx/sites-enabled/default && \ 
-    mv /tmp/lua-server /etc/nginx/sites-available/ && \ 
-    ln -sf /etc/nginx/sites-available/lua-server /etc/nginx/sites-enabled/lua-server && \ 
-    mkdir -p /opt/lua && \ 
-    mv /tmp/lua.sh /opt/lua/ && \ 
-    chmod +x /opt/lua/lua.sh && \ 
-    mkdir -p /var/www/lua && \ 
-    touch /var/www/lua/output.html && \ 
-    chmod 666 /var/www/lua/output.html && \ 
+    apt-get install -y --no-install-recommends openresty && \ 
     apt-get autoremove && \ 
-    apt-get clean all
+    apt-get clean all && \ 
+    chmod +x /root/openresty.sh && \ 
+    mkdir -p /var/log/openresty && \ 
+    chmod 664 /var/log/openresty
 
-CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
+EXPOSE 80
+
+CMD ["/bin/bash", "-c", "/root/openresty.sh"]
