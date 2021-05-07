@@ -3,11 +3,12 @@
 # Makefile for Docker projects
 #
 # Author: Yves Vindevogel (vindevoy)
-# Version: 1.1.0
-# Date: 2021-02-29
+# Version: 1.0.0
+# Date: 2019-10-29
 #
 ###
 
+SHELL=/bin/bash
 
 #
 # Settings: specify to your own need
@@ -17,10 +18,9 @@
 # IMAGE_VERSION: the version number (script also publishes as latest besides this number)
 #
 
-# Note: the version of this image will reflect the version of CherryPy
 
 IMAGE_REPO=vindevoy
-IMAGE_NAME=debian10-nginx-lua-script
+IMAGE_NAME=centos8-openresty
 IMAGE_VERSION=1.0.0
 
 PORT_FORWARDING=-p80:80

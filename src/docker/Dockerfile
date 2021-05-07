@@ -1,9 +1,9 @@
 ###
 #
 #	Yves Vindevogel (vindevoy)
-#	2021-02-16
+#	2021-05-07
 #
-#	Debian based image running NGINX that executes a bash script and returns the output of it on port 80
+#	Hello world with OpenResty, the base for further CLI over HTTP(S)
 #
 ###
  
@@ -11,28 +11,46 @@ FROM vindevoy/debian-base:latest
 
 LABEL maintainer="Yves Vindevogel (vindevoy) - yves.vindevogel@asynchrone.com"
 
-COPY resources/lua.sh /tmp/lua.sh
-COPY resources/lua-server /tmp/lua-server 
+# Copy the needed files to run OpenResty to /root
+COPY resources/openresty.sh /root/openresty.sh
+COPY resources/openresty.conf /root/openresty.conf
+COPY resources/openresty.list /etc/apt/sources.list.d/openresty.list
 
+# Get the GPG Public key, without that, apt will not install OpenResty
+RUN apt-get install -y --no-install-recommends wget gnupg ca-certificates
+RUN wget -O - https://openresty.org/package/pubkey.gpg | apt-key add -
+
+# Update the system
 RUN apt-get update -y
 RUN apt-get upgrade -y
 
-RUN apt-get install nginx libnginx-mod-http-lua --no-install-recommends -y
+# Install OpenResty
+RUN apt-get install -y --no-install-recommends openresty
 
-RUN rm -f /etc/nginx/sites-enabled/default 
-RUN mv /tmp/lua-server /etc/nginx/sites-available/
-RUN ln -sf /etc/nginx/sites-available/lua-server /etc/nginx/sites-enabled/lua-server 
-
-RUN mkdir -p /opt/lua
-RUN mv /tmp/lua.sh /opt/lua/
-RUN chmod +x /opt/lua/lua.sh 
-
-RUN mkdir -p /var/www/lua 
-RUN touch /var/www/lua/output.html 
-RUN chmod 666 /var/www/lua/output.html
-
+# Cleanup
 RUN apt-get autoremove
 RUN apt-get clean all
 
+# Make sure the shell script is executable
+RUN chmod +x /root/openresty.sh 
 
-CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
+# Make dirs for logging
+RUN mkdir -p /var/log/openresty
+RUN chmod 664 /var/log/openresty
+
+# OpenResty will run on default http port 80
+EXPOSE 80
+
+#CMD ["/bin/bash"]
+CMD ["/bin/bash", "-c", "/root/openresty.sh"]
+
+
+
+
+
+
+
+#RUN apt-get install nginx libnginx-mod-http-lua --no-install-recommends -y
+
+
+
