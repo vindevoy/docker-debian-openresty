@@ -1,1 +1,1 @@
-deb http://openresty.org/package/debian buster openresty
+deb http://openresty.org/package/debian bullseye openresty

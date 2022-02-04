@@ -7,7 +7,7 @@
 #
 ###
  
-FROM vindevoy/debian-base:latest
+FROM vindevoy/debian-base:11.2
 
 LABEL maintainer="Yves Vindevogel (vindevoy) - yves.vindevogel@asynchrone.com"
 
@@ -22,7 +22,7 @@ RUN wget -O - https://openresty.org/package/pubkey.gpg | apt-key add -
 
 # Update the system
 RUN apt-get update -y
-RUN apt-get upgrade -y
+RUN apt-get dist-upgrade -y
 
 # Install OpenResty
 RUN apt-get install -y --no-install-recommends openresty
@@ -43,14 +43,3 @@ EXPOSE 80
 
 #CMD ["/bin/bash"]
 CMD ["/bin/bash", "-c", "/root/openresty.sh"]
-
-
-
-
-
-
-
-#RUN apt-get install nginx libnginx-mod-http-lua --no-install-recommends -y
-
-
-
