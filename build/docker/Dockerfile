@@ -1,4 +1,4 @@
-FROM vindevoy/debian-base:latest
+FROM vindevoy/debian-base:11.2
 
 LABEL maintainer="Yves Vindevogel (vindevoy) - yves.vindevogel@asynchrone.com"
 
@@ -10,7 +10,7 @@ RUN set -x && \
     apt-get install -y --no-install-recommends wget gnupg ca-certificates && \ 
     wget -O - https://openresty.org/package/pubkey.gpg | apt-key add - && \ 
     apt-get update -y && \ 
-    apt-get upgrade -y && \ 
+    apt-get dist-upgrade -y && \ 
     apt-get install -y --no-install-recommends openresty && \ 
     apt-get autoremove && \ 
     apt-get clean all && \ 
