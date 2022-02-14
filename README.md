@@ -4,4 +4,8 @@ The project is a Docker container based on Debian, with OpenResty installed.  Th
 
 ## Versioning
 
-The version of the image corresponds to the version of OpenResty (as found in the download during the build)
+Considering the version is given as follows: a.b.c.d-y-z, this corresponds to:
+
+- a.b.c.d: the version of the openresty software
+- y: the build version of the openresty software, as found in the download of the software
+- z: the build version of this image
